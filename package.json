@@ -6,12 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "bun test",
+    "test:unit": "bun test tests/unit",
+    "test:integration": "bun test tests/integration",
+    "test:coverage": "bun test --coverage",
+    "test:watch": "bun test --watch",
+    "test:deno": "deno task test",
+    "test:ci": "bun test --coverage && npm run lint && npm run build",
+    "serve:bun": "bun server.ts",
+    "serve:deno": "deno task serve",
+    "cli": "bun cli.ts",
+    "prepare": "husky"
   },
   "dependencies": {
+    "lucide-react": "^1.55.0",
     "next": "16.4.0",
     "react": "19.3.0",
-    "react-dom": "19.3.0"
+    "react-dom": "19.3.0",
+    "simple-icons": "^16.34.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",
@@ -20,7 +33,11 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "husky": "^9.1.7",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "braces": "^3.0.3"
   }
 }

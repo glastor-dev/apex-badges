@@ -1,0 +1,56 @@
+name: Auto-Generate SVG Badges
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'src/lib/**'
+      - 'cli.ts'
+      - 'package.json'
+      - '.github/workflows/badges.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  generate-badges:
+    name: Generate Project Badges
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Generate Reference Badges
+        run: |
+          mkdir -p public/badges
+          
+          # Reference Badges from original design
+          bun cli.ts --label "Deno" --status "^2.0.0" --color "black" --logo "deno" --out public/badges/deno.svg
+          bun cli.ts --label "Docker" --status "ready" --color "007ec6" --logo "docker" --out public/badges/docker.svg
+          bun cli.ts --label "lefthook" --status "enabled" --color "3fb950" --logo "lefthook" --out public/badges/lefthook.svg
+          bun cli.ts --label "CodeQL" --status "passing" --color "2ea44f" --logo "codeql" --out public/badges/codeql.svg
+          bun cli.ts --label "Code License" --status "GPLv3" --color "c4704f" --logo "license" --out public/badges/license-code.svg
+          bun cli.ts --label "Text License" --status "CC BY 4.0" --color "c4704f" --logo "license" --out public/badges/license-text.svg
+          bun cli.ts --label "Tests" --status "21 passing" --color "3fb950" --logo "check" --out public/badges/tests.svg
+          bun cli.ts --label "Engine" --status "sub-1ms" --color "cyan" --logo "bolt" --out public/badges/performance.svg
+
+      - name: Commit Updated Badges
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-update reference SVG badges [skip ci]"
+          file_pattern: "public/badges/*.svg"

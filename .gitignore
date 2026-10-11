@@ -30,12 +30,20 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env and secrets
 .env*
+*.env
+*.pem
+*.key
+*.cert
+*.crt
 
-# vercel
+# local scratch & ide
 .vercel
+.claude/
+.gemini/
+scratch/
 
-# typescript
+# typescript & build
 *.tsbuildinfo
 next-env.d.ts

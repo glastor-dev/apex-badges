@@ -1,0 +1,14 @@
+{
+  "name": "@apex/badges",
+  "version": "1.0.0",
+  "exports": "./src/lib/svg-engine.ts",
+  "tasks": {
+    "test": "deno test --unstable-sloppy-imports tests/unit",
+    "serve": "deno run --allow-net --allow-read --allow-env server.ts",
+    "cli": "deno run --allow-write --allow-read --allow-env cli.ts"
+  },
+  "compilerOptions": {
+    "strict": true,
+    "lib": ["dom", "dom.iterable", "esnext"]
+  }
+}
