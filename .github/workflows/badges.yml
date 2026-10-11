@@ -50,7 +50,7 @@ jobs:
           bun cli.ts --label "Engine" --status "sub-1ms" --color "cyan" --logo "bolt" --out public/badges/performance.svg
 
       - name: Commit Updated Badges
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: "chore: auto-update reference SVG badges [skip ci]"
           file_pattern: "public/badges/*.svg"
